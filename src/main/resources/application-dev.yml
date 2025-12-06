@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/medical-db-dev
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+#logging:
+#  level:
+#    root: info
+#    org.springframework.web: debug
+#    org.hibernate.SQL: debug
+#    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+jwt:
+  secret: ${JWT_SECRET:pG9qLr5K1e9mB2c8Tq0xD7rN6sYwV4fGmZ1uE0oHjP6nX2tC3lA9vS8kR5dF0bQ}
+
+  access:
+    expiration: ${JWT_EXPIRATION:86400000} # 1 dia
+
+  refresh:
+    expiration: ${JWT_REFRESH:1209600000} # 14 dias
