@@ -1,16 +1,19 @@
 package br.com.wsystechnologies.medical.application.services;
 
-import br.com.wsystechnologies.medical.application.mapper.ClinicMapper;
-import br.com.wsystechnologies.medical.domain.repository.ClinicRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import br.com.wsystechnologies.medical.application.dto.clinic.ClinicRequest;
+import br.com.wsystechnologies.medical.application.dto.clinic.ClinicResponse;
 
-@Service
-@RequiredArgsConstructor
-public class ClinicService {
+import java.util.List;
+import java.util.UUID;
 
-    private final ClinicRepository clinicRepository;
-    private final ClinicMapper mapper;
+public interface ClinicService {
+    ClinicResponse create(ClinicRequest request);
 
+    ClinicResponse update(UUID id, ClinicRequest request);
 
+    ClinicResponse findById(UUID id);
+
+    List<ClinicResponse> findAll();
+
+    void delete(UUID id);
 }

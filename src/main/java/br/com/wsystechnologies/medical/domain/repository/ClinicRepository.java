@@ -11,4 +11,5 @@ public interface ClinicRepository extends JpaRepository<Clinic, UUID> {
     boolean existsByCnpj(String cnpj);
     Optional<Clinic> findByCnpj(String cnpj);
     Optional<Clinic> findByName(String name);
+    List<Clinic> findAllByNameContainingIgnoreCase(String name);
 }

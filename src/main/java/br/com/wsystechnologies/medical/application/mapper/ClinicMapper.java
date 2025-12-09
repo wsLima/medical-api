@@ -1,28 +1,23 @@
 package br.com.wsystechnologies.medical.application.mapper;
 
-import org.springframework.stereotype.Component;
+import br.com.wsystechnologies.medical.application.dto.clinic.ClinicRequest;
+import br.com.wsystechnologies.medical.application.dto.clinic.ClinicResponse;
+import br.com.wsystechnologies.medical.domain.model.Clinic;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Component
-public class ClinicMapper {
+@Mapper(
+        componentModel = "spring",
+        uses = {AddressMapper.class}
+)
+public interface ClinicMapper {
 
-//    public Clinic toEntity(ClinicRequest dto) {
-//        return Clinic.builder()
-//                .name(dto.name())
-//                .cnpj(dto.cnpj())
-//                .phone(dto.phone())
-//                .email(dto.email())
-//                .active(true)
-//                .build();
-//    }
-//
-//    public ClinicResponse toDTO(Clinic c) {
-//        return new ClinicResponse(
-//                c.getId(),
-//                c.getName(),
-//                c.getCnpj(),
-//                c.getPhone(),
-//                c.getEmail(),
-//
-//        );
-//    }
+    ClinicResponse toResponse(Clinic entity);
+
+    Clinic toEntity(ClinicRequest request);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateEntityFromRequest(ClinicRequest request, @MappingTarget Clinic entity);
 }

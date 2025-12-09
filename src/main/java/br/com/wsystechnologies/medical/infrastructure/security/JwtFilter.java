@@ -1,9 +1,9 @@
 package br.com.wsystechnologies.medical.infrastructure.security;
 
+import br.com.wsystechnologies.medical.domain.model.Account;
 import br.com.wsystechnologies.medical.domain.model.Profile;
-import br.com.wsystechnologies.medical.domain.model.User;
+import br.com.wsystechnologies.medical.domain.repository.AccountRepository;
 import br.com.wsystechnologies.medical.domain.repository.ProfileRepository;
-import br.com.wsystechnologies.medical.domain.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,7 +25,7 @@ import java.util.UUID;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
-    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
     private final ProfileRepository profileRepository;
 
     @Override
@@ -43,10 +43,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String token = authHeader.substring(7).trim();
 
-        UUID userId;
+        UUID accountId;
         try {
             Claims claims = jwtProvider.validateToken(token);
-            userId = UUID.fromString(claims.getSubject());
+            accountId = UUID.fromString(claims.getSubject());
+
         } catch (Exception e) {
             SecurityContextHolder.clearContext();
             chain.doFilter(request, response);
@@ -55,10 +56,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
             try {
-                User user = userRepository.findById(userId).orElseThrow();
-                Profile profile = profileRepository.findById(userId).orElseThrow();
+                Account account = accountRepository.findById(accountId).orElseThrow();
+                Profile profile = profileRepository.findByAccountId(accountId).orElseThrow();
 
-                UserPrincipal authUser = new UserPrincipal(user, profile);
+                UserPrincipal authUser = new UserPrincipal(account, profile);
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(

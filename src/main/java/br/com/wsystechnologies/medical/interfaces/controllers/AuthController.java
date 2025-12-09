@@ -33,10 +33,10 @@ public class AuthController {
         );
 
         UserPrincipal user = (UserPrincipal) authentication.getPrincipal();
-        Profile profile = profileRepository.findById(user.getUserId()).orElseThrow();
+//        Profile profile = profileRepository.findById(user.getUserId()).orElseThrow();
 
-        String accessToken = jwtProvider.generateToken(user.getUserId(), profile.getClinic().getId(), profile.getRole());
-        RefreshToken refreshToken = jwtProvider.createRefreshToken(user.getUserId());
+        String accessToken = jwtProvider.generateToken(user);
+        RefreshToken refreshToken = jwtProvider.createRefreshToken(user.getAccountId());
 
         return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken.getToken()));
     }
@@ -45,8 +45,8 @@ public class AuthController {
     public ResponseEntity<LoginResponse> refresh(@RequestBody RefreshRequest request) {
         return jwtProvider.validateRefreshToken(request.refreshToken())
                 .map(rt -> {
-                    Profile profile = profileRepository.findById(rt.getUserId()).orElseThrow();
-                    String newAccessToken = jwtProvider.generateToken(rt.getUserId(), profile.getClinic().getId(), profile.getRole());
+                    Profile profile = profileRepository.findById(rt.getAccountId()).orElseThrow();
+                    String newAccessToken = jwtProvider.generateToken(rt.getAccountId(), profile.getClinic().getId(), profile.getRole());
                     return ResponseEntity.ok(new LoginResponse(newAccessToken, rt.getToken()));
                 })
                 .orElseThrow(() -> new RuntimeException("Invalid or expired refresh token"));

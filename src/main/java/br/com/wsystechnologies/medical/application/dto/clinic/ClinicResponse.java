@@ -1,21 +1,20 @@
 package br.com.wsystechnologies.medical.application.dto.clinic;
 
-import java.util.UUID;
+import br.com.wsystechnologies.medical.application.dto.address.AddressResponse;
+import br.com.wsystechnologies.medical.application.dto.base.BaseDTO;
+import lombok.Getter;
+import lombok.Setter;
 
-public record ClinicResponse(
-        UUID id,
-        String name,
-        String legalName,
-        String cnpj,
-        String phone,
-        String email,
-        String addressStreet,
-        String addressNumber,
-        String addressComplement,
-        String addressNeighborhood,
-        String addressCity,
-        String addressState,
-        String addressZipcode,
-        boolean active
-) {
+@Getter
+@Setter
+public class ClinicResponse extends BaseDTO {
+    private String name;
+    private String legalName;
+    private String cnpj;
+    private String phone;
+    private String email;
+
+    private AddressResponse address;
+    private Boolean active;
 }
+

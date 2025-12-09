@@ -2,9 +2,11 @@ package br.com.wsystechnologies.medical.domain.model;
 
 import br.com.wsystechnologies.medical.domain.model.base.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "medical_records")
@@ -12,24 +14,19 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class MedicalRecord extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "uuid")
-    private UUID id;
-
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
     @ManyToOne
-    @JoinColumn(name = "created_by")
+    @JoinColumn(name = "created_by_id")
     private Professional createdBy;
 
     private String mainIssue;
@@ -39,3 +36,4 @@ public class MedicalRecord extends BaseEntity {
 
     private String notes;
 }
+

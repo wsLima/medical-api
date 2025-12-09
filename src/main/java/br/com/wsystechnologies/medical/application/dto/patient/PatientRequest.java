@@ -1,17 +1,20 @@
 package br.com.wsystechnologies.medical.application.dto.patient;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.UUID;
 import java.time.LocalDate;
 
-public record PatientRequest(
-        UUID clinicId,
-        String fullName,
-        LocalDate dateOfBirth,
-        String documentId,
-        String phone,
-        String email,
-        String address,   // pode ser JSON serializado
-        String notes,
-        UUID createdBy,
-        boolean active
-) {}
+@Getter
+@Setter
+public class PatientRequest {
+    private UUID clinicId;
+    private String fullName;
+    private LocalDate dateOfBirth;
+    private String documentId;
+    private String phone;
+    private String email;
+    private UUID addressId;
+    private String notes;
+}

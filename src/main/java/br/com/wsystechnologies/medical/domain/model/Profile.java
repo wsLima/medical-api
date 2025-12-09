@@ -4,40 +4,26 @@ import br.com.wsystechnologies.medical.domain.enums.Role;
 import br.com.wsystechnologies.medical.domain.model.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.UUID;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "profiles")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@SuperBuilder
 public class Profile extends BaseEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "uuid")
-    private UUID id;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
 
-    @Column(nullable = false)
-    private String fullName;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Role role;
 
-    @Column(nullable = false)
+    @Builder.Default
     private boolean isActive = true;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
-    private User user;
-
 }
+

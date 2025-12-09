@@ -1,9 +1,9 @@
 package br.com.wsystechnologies.medical.infrastructure.security;
 
+import br.com.wsystechnologies.medical.domain.model.Account;
 import br.com.wsystechnologies.medical.domain.model.Profile;
-import br.com.wsystechnologies.medical.domain.model.User;
+import br.com.wsystechnologies.medical.domain.repository.AccountRepository;
 import br.com.wsystechnologies.medical.domain.repository.ProfileRepository;
-import br.com.wsystechnologies.medical.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,18 +14,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
     private final ProfileRepository profileRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
+        Account account = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-        // O Profile tem o mesmo ID do User (MapsId)
-        Profile profile = profileRepository.findById(user.getId())
+        Profile profile = profileRepository.findByAccountId(account.getId())
                 .orElseThrow(() -> new UsernameNotFoundException("Profile not found for user: " + email));
 
-        return new UserPrincipal(user, profile);
+        return new UserPrincipal(account, profile);
     }
 }

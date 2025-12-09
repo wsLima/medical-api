@@ -41,7 +41,7 @@ public class JwtProvider {
     // Access token: inclui clinicId e role
     public String generateToken(UserPrincipal principal) {
         return Jwts.builder()
-                .setSubject(principal.getUserId().toString())
+                .setSubject(principal.getAccountId().toString())
                 .claim("clinicId", principal.getClinicId().toString())
                 .claim("role", principal.getRole().name())
                 .setIssuedAt(new Date())
@@ -65,7 +65,7 @@ public class JwtProvider {
     // Refresh token persistido (DB)
     public RefreshToken createRefreshToken(UUID userId) {
         RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setUserId(userId);
+        refreshToken.setAccountId(userId);
         refreshToken.setToken(UUID.randomUUID().toString());
         refreshToken.setExpiryDate(OffsetDateTime.now().plus(Duration.ofMillis(refreshExpirationMs)));
         return refreshTokenRepository.save(refreshToken);
@@ -79,7 +79,7 @@ public class JwtProvider {
     // Se quiser usar JWT como refresh token (não persistido), mantenha este método. Caso contrário, remova.
     public String generateRefreshToken(UserPrincipal user) {
         return generateTokenWithClaims(user.getUsername(), refreshExpirationMs, Map.of(
-                "id", user.getUserId().toString()
+                "id", user.getAccountId().toString()
         ));
     }
 

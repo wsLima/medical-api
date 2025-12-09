@@ -1,16 +1,23 @@
 package br.com.wsystechnologies.medical.application.dto.evolution;
 
-import java.util.UUID;
-import java.time.OffsetDateTime;
+import br.com.wsystechnologies.medical.application.dto.appointment.AppointmentResponse;
+import br.com.wsystechnologies.medical.application.dto.base.BaseDTO;
+import br.com.wsystechnologies.medical.application.dto.clinic.ClinicResponse;
+import br.com.wsystechnologies.medical.application.dto.patient.PatientResponse;
+import br.com.wsystechnologies.medical.application.dto.professional.ProfessionalResponse;
+import lombok.Getter;
+import lombok.Setter;
 
-public record EvolutionResponse(
-        UUID id,
-        UUID clinicId,
-        UUID patientId,
-        UUID professionalId,
-        UUID appointmentId,
-        String notes,
-        String structuredData,   // armazenado como JSON
-        OffsetDateTime createdAt,
-        OffsetDateTime updatedAt
-) {}
+import java.util.Map;
+
+@Getter
+@Setter
+public class EvolutionResponse extends BaseDTO {
+    private ClinicResponse clinic;
+    private PatientResponse patient;
+    private ProfessionalResponse professional;
+    private AppointmentResponse appointment;
+
+    private String notes;
+    private Map<String, Object> structuredData;
+}

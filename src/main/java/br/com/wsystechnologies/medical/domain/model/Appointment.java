@@ -3,10 +3,13 @@ package br.com.wsystechnologies.medical.domain.model;
 import br.com.wsystechnologies.medical.domain.enums.AppointmentStatus;
 import br.com.wsystechnologies.medical.domain.model.base.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-import java.time.OffsetDateTime;
-import java.util.UUID;
+import java.time.Instant;
 
 @Entity
 @Table(name = "appointments")
@@ -14,40 +17,35 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class Appointment extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "uuid")
-    private UUID id;
-
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "professional_id")
     private Professional professional;
 
-    @Column(nullable = false)
-    private OffsetDateTime startsAt;
-
-    @Column(nullable = false)
-    private OffsetDateTime endsAt;
+    private Instant startsAt;
+    private Instant endsAt;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private AppointmentStatus status;
 
     private String notes;
 
     @ManyToOne
-    @JoinColumn(name = "created_by")
+    @JoinColumn(name = "created_by_id")
     private Profile createdBy;
 
+    @ManyToOne
+    @JoinColumn(name = "service_provided_id")
+    private ServiceProvided serviceProvided;
 }
+

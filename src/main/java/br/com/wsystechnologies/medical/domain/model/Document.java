@@ -4,6 +4,7 @@ import br.com.wsystechnologies.medical.domain.enums.DocumentType;
 import br.com.wsystechnologies.medical.domain.model.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -14,47 +15,39 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Document {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "uuid")
-    private UUID id;
+@SuperBuilder
+public class Document extends BaseEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
     @ManyToOne
-    @JoinColumn(name = "uploaded_by")
-    private Profile uploadedBy;
+    @JoinColumn(name = "appointment_id")
+    private Appointment appointment;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private DocumentType type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 180)
     private String name;
 
+    @Column(length = 500)
+    private String description;
+
+    /**
+     * Caminho para o arquivo (S3, MinIO, FileSystem, etc.)
+     */
     @Column(nullable = false)
     private String storagePath;
 
-    private String mimeType;
-
-    private Long sizeBytes;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private OffsetDateTime createdAt;
-
-    @PrePersist
-    public void prePersist() {
-        OffsetDateTime now = OffsetDateTime.now();
-        createdAt = now;
-    }
+    @ManyToOne
+    @JoinColumn(name = "created_by_id")
+    private Profile createdBy;
 
 }

@@ -1,12 +1,15 @@
 package br.com.wsystechnologies.medical.application.dto.profile;
 
 import br.com.wsystechnologies.medical.domain.enums.Role;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
-public record ProfileRequest(
-        UUID clinicId,
-        String fullName,
-        Role role,
-        boolean active
-) {}
+@Getter
+@Setter
+public class ProfileRequest {
+    private UUID clinicId;
+    private UUID accountId;
+    private Role role;
+}

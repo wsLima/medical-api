@@ -1,15 +1,18 @@
 package br.com.wsystechnologies.medical.application.dto.medicalRecord;
 
-import java.util.UUID;
-import java.time.OffsetDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
-public record MedicalRecordRequest(
-        UUID clinicId,
-        UUID patientId,
-        UUID createdBy,      // profissional responsável
-        String mainIssue,
-        String anamnesis,    // armazenado como JSON
-        String notes,
-        OffsetDateTime createdAt,
-        OffsetDateTime updatedAt
-) {}
+import java.util.Map;
+import java.util.UUID;
+
+@Getter
+@Setter
+public class MedicalRecordRequest {
+    private UUID clinicId;
+    private UUID patientId;
+    private UUID createdById;
+    private String mainIssue;
+    private Map<String, Object> anamnesis;
+    private String notes;
+}

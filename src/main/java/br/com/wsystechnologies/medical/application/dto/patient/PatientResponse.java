@@ -1,18 +1,27 @@
 package br.com.wsystechnologies.medical.application.dto.patient;
 
-import java.util.UUID;
+import br.com.wsystechnologies.medical.application.dto.address.AddressResponse;
+import br.com.wsystechnologies.medical.application.dto.base.BaseDTO;
+import br.com.wsystechnologies.medical.application.dto.clinic.ClinicResponse;
+import br.com.wsystechnologies.medical.application.dto.profile.ProfileResponse;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
-public record PatientResponse(
-        UUID id,
-        UUID clinicId,
-        String fullName,
-        LocalDate dateOfBirth,
-        String documentId,
-        String phone,
-        String email,
-        String address,   // pode ser JSON serializado
-        String notes,
-        UUID createdBy,
-        boolean active
-) {}
+@Getter
+@Setter
+public class PatientResponse extends BaseDTO {
+    private ClinicResponse clinic;
+    private String fullName;
+    private LocalDate dateOfBirth;
+    private String documentId;
+    private String phone;
+    private String email;
+
+    private AddressResponse address;
+    private String notes;
+    private Boolean active;
+
+    private ProfileResponse createdBy;
+}

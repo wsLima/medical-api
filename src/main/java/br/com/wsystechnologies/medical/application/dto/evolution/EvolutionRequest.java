@@ -1,15 +1,18 @@
 package br.com.wsystechnologies.medical.application.dto.evolution;
 
-import java.util.UUID;
-import java.time.OffsetDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
-public record EvolutionRequest(
-        UUID clinicId,
-        UUID patientId,
-        UUID professionalId,
-        UUID appointmentId,
-        String notes,
-        String structuredData,   // armazenado como JSON
-        OffsetDateTime createdAt,
-        OffsetDateTime updatedAt
-) {}
+import java.util.Map;
+import java.util.UUID;
+
+@Getter
+@Setter
+public class EvolutionRequest {
+    private UUID clinicId;
+    private UUID patientId;
+    private UUID professionalId;
+    private UUID appointmentId;
+    private String notes;
+    private Map<String, Object> structuredData;
+}
