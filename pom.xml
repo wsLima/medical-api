@@ -150,7 +150,6 @@
 
     <build>
         <plugins>
-
             <!-- COMPILER -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -183,6 +182,19 @@
                 </configuration>
             </plugin>
 
+            <!-- SPRING BOOT PLUGIN PARA JAR EXECUTÁVEL -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>4.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
