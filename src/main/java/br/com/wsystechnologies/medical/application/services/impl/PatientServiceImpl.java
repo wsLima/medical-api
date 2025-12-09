@@ -60,12 +60,32 @@ public class PatientServiceImpl implements PatientService {
         return mapper.toResponse(entity);
     }
 
-    @Override
     public PatientResponse update(UUID id, PatientRequest request) {
+
         Patient entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Patient not found: " + id));
 
+        if (request.getClinicId() != null) {
+            Clinic clinic = clinicRepository.findById(request.getClinicId())
+                    .orElseThrow(() -> new EntityNotFoundException("Clinic not found: " + request.getClinicId()));
+            entity.setClinic(clinic);
+        }
+
+        if (request.getAddress() != null) {
+
+            if (entity.getAddress() == null) {
+                Address newAddress = addressMapper.toEntity(request.getAddress());
+                addressRepository.save(newAddress);
+                entity.setAddress(newAddress);
+
+            } else {
+                addressMapper.updateEntityFromDto(request.getAddress(), entity.getAddress());
+                addressRepository.save(entity.getAddress());
+            }
+        }
+
         mapper.updateEntityFromRequest(request, entity);
+
         repository.save(entity);
 
         return mapper.toResponse(entity);
@@ -73,10 +93,11 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void delete(UUID id) {
-        if (!repository.existsById(id))
-            throw new EntityNotFoundException("Patient not found: " + id);
+        Patient entity = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Patient not found: " + id));
 
-        repository.deleteById(id);
+        entity.setActive(false);
+        repository.save(entity);
     }
 
     @Override
