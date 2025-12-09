@@ -2,10 +2,18 @@ package br.com.wsystechnologies.medical.application.services.impl;
 
 import br.com.wsystechnologies.medical.application.dto.patient.PatientRequest;
 import br.com.wsystechnologies.medical.application.dto.patient.PatientResponse;
+import br.com.wsystechnologies.medical.application.mapper.AddressMapper;
 import br.com.wsystechnologies.medical.application.mapper.PatientMapper;
 import br.com.wsystechnologies.medical.application.services.PatientService;
+import br.com.wsystechnologies.medical.common.SecurityUtils;
+import br.com.wsystechnologies.medical.domain.model.Address;
+import br.com.wsystechnologies.medical.domain.model.Clinic;
 import br.com.wsystechnologies.medical.domain.model.Patient;
+import br.com.wsystechnologies.medical.domain.model.Profile;
+import br.com.wsystechnologies.medical.domain.repository.AddressRepository;
+import br.com.wsystechnologies.medical.domain.repository.ClinicRepository;
 import br.com.wsystechnologies.medical.domain.repository.PatientRepository;
+import br.com.wsystechnologies.medical.domain.repository.ProfileRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,13 +27,36 @@ import java.util.UUID;
 @Transactional
 public class PatientServiceImpl implements PatientService {
 
+    private final ClinicRepository clinicRepository;
+    private final AddressRepository addressRepository;
     private final PatientRepository repository;
+    private final ProfileRepository profileRepository;
+
     private final PatientMapper mapper;
+    private final AddressMapper addressMapper;
 
     @Override
     public PatientResponse create(PatientRequest request) {
+
+        Clinic clinic = clinicRepository.findById(request.getClinicId())
+                .orElseThrow(() -> new IllegalArgumentException("Clinic not found"));
+
+        Address address = addressMapper.toEntity(request.getAddress());
+        addressRepository.save(address);
+
+        Profile createdBy = profileRepository
+                .findById(SecurityUtils.getCurrentProfileId())
+                .orElseThrow(() -> new IllegalArgumentException("Profile not found"));
+
         Patient entity = mapper.toEntity(request);
+
+        entity.setClinic(clinic);
+        entity.setAddress(address);
+        entity.setCreatedBy(createdBy);
+        entity.setActive(true);
+
         repository.save(entity);
+
         return mapper.toResponse(entity);
     }
 

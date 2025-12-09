@@ -18,6 +18,7 @@ public class UserPrincipal implements UserDetails {
 
     private final UUID accountId;
     private final UUID clinicId;
+    private final UUID profileId;
     private final Role role;
     private final String fullName;
     private final String email;
@@ -27,6 +28,7 @@ public class UserPrincipal implements UserDetails {
     public UserPrincipal(Account account, Profile profile) {
         this.accountId = account.getId();
         this.clinicId = profile.getClinic().getId();
+        this.profileId = profile.getId();
         this.role = profile.getRole();
         this.fullName = account.getPerson().getFullName();
         this.email = account.getEmail();

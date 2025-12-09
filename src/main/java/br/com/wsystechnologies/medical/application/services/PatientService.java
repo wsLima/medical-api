@@ -2,7 +2,6 @@ package br.com.wsystechnologies.medical.application.services;
 
 import br.com.wsystechnologies.medical.application.dto.patient.PatientRequest;
 import br.com.wsystechnologies.medical.application.dto.patient.PatientResponse;
-import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;

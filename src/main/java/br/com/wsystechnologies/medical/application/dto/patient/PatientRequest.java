@@ -1,5 +1,6 @@
 package br.com.wsystechnologies.medical.application.dto.patient;
 
+import br.com.wsystechnologies.medical.application.dto.address.AddressRequest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,6 @@ public class PatientRequest {
     private String documentId;
     private String phone;
     private String email;
-    private UUID addressId;
+    private AddressRequest address;
     private String notes;
 }

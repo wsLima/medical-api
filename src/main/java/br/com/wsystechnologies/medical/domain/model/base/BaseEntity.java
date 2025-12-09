@@ -1,13 +1,12 @@
 package br.com.wsystechnologies.medical.domain.model.base;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import br.com.wsystechnologies.medical.infrastructure.tenant.TenantContext;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -19,6 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
+@EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 
     @Id
@@ -36,4 +36,13 @@ public abstract class BaseEntity {
     @UpdateTimestamp
     @Column(nullable = false)
     private Instant updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        String tenant = TenantContext.getCurrentTenant();
+        if (tenant == null) {
+            throw new IllegalStateException("TenantId not found in context (X-Tenant-ID missing)");
+        }
+        this.tenantId = UUID.fromString(tenant);
+    }
 }

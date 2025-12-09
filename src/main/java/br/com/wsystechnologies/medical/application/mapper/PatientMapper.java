@@ -7,7 +7,7 @@ import org.mapstruct.*;
 
 @Mapper(
         componentModel = "spring",
-        uses = { PersonMapper.class, ClinicMapper.class }
+        uses = {AddressMapper.class, PersonMapper.class, ClinicMapper.class }
 )
 public interface PatientMapper {
 
