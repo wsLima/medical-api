@@ -42,6 +42,8 @@ public class JwtProvider {
     public String generateToken(UserPrincipal principal) {
         return Jwts.builder()
                 .setSubject(principal.getAccountId().toString())
+                .claim("name", principal.getFullName())
+                .claim("email", principal.getEmail())
                 .claim("clinicId", principal.getClinicId().toString())
                 .claim("role", principal.getRole().name())
                 .setIssuedAt(new Date())
@@ -74,13 +76,6 @@ public class JwtProvider {
     public Optional<RefreshToken> validateRefreshToken(String token) {
         return refreshTokenRepository.findByToken(token)
                 .filter(rt -> rt.getExpiryDate().isAfter(OffsetDateTime.now()));
-    }
-
-    // Se quiser usar JWT como refresh token (não persistido), mantenha este método. Caso contrário, remova.
-    public String generateRefreshToken(UserPrincipal user) {
-        return generateTokenWithClaims(user.getUsername(), refreshExpirationMs, Map.of(
-                "id", user.getAccountId().toString()
-        ));
     }
 
     private String generateTokenWithClaims(String subject, long expiration, Map<String, Object> claims) {

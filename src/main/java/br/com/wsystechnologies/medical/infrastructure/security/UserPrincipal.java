@@ -19,6 +19,7 @@ public class UserPrincipal implements UserDetails {
     private final UUID accountId;
     private final UUID clinicId;
     private final Role role;
+    private final String fullName;
     private final String email;
     private final String password;
     private final boolean enabled;
@@ -27,6 +28,7 @@ public class UserPrincipal implements UserDetails {
         this.accountId = account.getId();
         this.clinicId = profile.getClinic().getId();
         this.role = profile.getRole();
+        this.fullName = account.getPerson().getFullName();
         this.email = account.getEmail();
         this.password = account.getPassword();
         this.enabled = account.isEnabled();
