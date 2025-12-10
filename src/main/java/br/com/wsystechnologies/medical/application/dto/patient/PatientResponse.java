@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -23,5 +24,5 @@ public class PatientResponse extends BaseDTO {
     private String notes;
     private Boolean active;
 
-    private ProfileResponse createdBy;
+    private UUID createdBy;
 }
