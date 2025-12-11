@@ -45,8 +45,18 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_FLYWAY_ENABLED: "true"
+      KEYSTORE_PASSWORD: admin@123
+    volumes:
+      - ./ssl/api-keystore.p12:/app/api-keystore.p12
     ports:
-      - "8085:8080"
+      - "8443:8443"
+    command: >
+      java -jar app.jar
+      --server.port=8443
+      --server.ssl.key-store=/app/api-keystore.p12
+      --server.ssl.key-store-password=${KEYSTORE_PASSWORD}
+      --server.ssl.key-store-type=PKCS12
+      --server.ssl.key-alias=api
 
 volumes:
   postgres_data:

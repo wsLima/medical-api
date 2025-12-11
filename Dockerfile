@@ -27,8 +27,16 @@ WORKDIR /app
 # Copia jar da etapa de build
 COPY --from=builder /app/target/*.jar app.jar
 
-# Expõe porta
-EXPOSE 8080
+# Copia keystore (opcional se já estiver montando via volume)
+# COPY ./ssl/api-keystore.p12 ./api-keystore.p12
 
-# Comando de inicialização
-ENTRYPOINT ["java","-jar","app.jar"]
+# Expõe porta HTTPS
+EXPOSE 8443
+
+# Comando de inicialização com SSL
+ENTRYPOINT ["sh", "-c", "java -jar app.jar \
+  --server.port=8443 \
+  --server.ssl.key-store=/app/api-keystore.p12 \
+  --server.ssl.key-store-password=${KEYSTORE_PASSWORD} \
+  --server.ssl.key-store-type=PKCS12 \
+  --server.ssl.key-alias=api"]
