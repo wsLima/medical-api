@@ -14,21 +14,22 @@ import java.time.LocalDate;
 @SuperBuilder
 public class Patient extends BaseEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "clinic_id")
-    private Clinic clinic;
+
 
     private String fullName;
     private LocalDate dateOfBirth;
     private String documentId;
     private String phone;
     private String email;
+    private String notes;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
 
-    private String notes;
+    @ManyToOne
+    @JoinColumn(name = "clinic_id")
+    private Clinic clinic;
 
     @ManyToOne
     @JoinColumn(name = "created_by_id")
