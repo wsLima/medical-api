@@ -13,7 +13,9 @@ server:
 springdoc:
   api-docs:
     enabled: true
+    path: /api/v3/api-docs    # adiciona o prefixo /api/
   swagger-ui:
     enabled: true
+    path: /api/swagger-ui.html  # adiciona o prefixo /api/
     operationsSorter: method
     tagsSorter: alpha

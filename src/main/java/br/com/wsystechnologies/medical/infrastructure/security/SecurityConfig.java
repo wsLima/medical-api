@@ -24,10 +24,9 @@ public class SecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
             "/api/auth/**",
-            "/v3/api-docs/**",
             "/api/v3/api-docs/**",
-            "/swagger-ui/**",
-            "/swagger-ui.html"
+            "/api/swagger-ui/**",
+            "/api/swagger-ui.html"
     };
 
     private final JwtFilter jwtFilter;
