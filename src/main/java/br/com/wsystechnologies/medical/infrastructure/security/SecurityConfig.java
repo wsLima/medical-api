@@ -25,18 +25,9 @@ public class SecurityConfig {
     private static final String[] AUTH_WHITELIST = {
             "/api/auth/**",
             "/v3/api-docs/**",
+            "/api/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html"
-    };
-
-    private static final String[] PUBLIC_GET_ENDPOINTS = {
-            "/api/announcements/**",
-            "/api/highlights/**",
-            "/api/plans/**"
-    };
-
-    private static final String[] PUBLIC_POST_ENDPOINTS = {
-            "/api/contact-requests/**"
     };
 
     private final JwtFilter jwtFilter;
@@ -55,6 +46,15 @@ public class SecurityConfig {
 
         SecurityFilterChain chain = http.build();
         return chain;
+    }
+
+    private void configureAuthorization(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(auth -> {
+            auth.requestMatchers(AUTH_WHITELIST).permitAll();
+            auth.anyRequest().authenticated();
+        });
+
+        http.authenticationProvider(authenticationProvider);
     }
 
     private void configureCsrf(HttpSecurity http) throws Exception {
@@ -77,17 +77,6 @@ public class SecurityConfig {
         http.exceptionHandling(ex -> {
             ex.authenticationEntryPoint(authEntryPoint);
         });
-    }
-
-    private void configureAuthorization(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> {
-            auth.requestMatchers(AUTH_WHITELIST).permitAll();
-            auth.requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll();
-            auth.requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll();
-            auth.anyRequest().authenticated();
-        });
-
-        http.authenticationProvider(authenticationProvider);
     }
 
     private void configureJwtFilter(HttpSecurity http) {
