@@ -7,15 +7,21 @@ spring:
     baseline-on-migrate: true
     locations: classpath:db/migration
 
-server:
-  port: 8080
-
 springdoc:
   api-docs:
     enabled: true
-    path: /api/v3/api-docs    # adiciona o prefixo /api/
+    path: /v3/api-docs
   swagger-ui:
     enabled: true
-    path: /api/swagger-ui.html  # adiciona o prefixo /api/
+    path: /swagger-ui.html
     operationsSorter: method
     tagsSorter: alpha
+
+server:
+  port: 8080
+
+# profile padrão (caso nenhum seja informado)
+---
+spring:
+  profiles:
+    active: dev
