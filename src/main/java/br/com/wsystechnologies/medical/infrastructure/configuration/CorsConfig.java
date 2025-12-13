@@ -15,13 +15,8 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of(
-                "http://localhost:4200",
-                "http://127.0.0.1:4200",
-                "https://fortsaude-app.vercel.app"
-        ));
-
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        config.addAllowedOriginPattern("*");
+        config.addAllowedMethod("*");
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
         config.setMaxAge(3600L);
