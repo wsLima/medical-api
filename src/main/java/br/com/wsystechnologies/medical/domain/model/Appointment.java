@@ -36,6 +36,7 @@ public class Appointment extends BaseEntity {
     private Instant endsAt;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", columnDefinition = "appointment_status")
     private AppointmentStatus status;
 
     private String notes;

@@ -4,14 +4,9 @@ import br.com.wsystechnologies.medical.application.dto.appointment.AppointmentRe
 import br.com.wsystechnologies.medical.application.dto.appointment.AppointmentResponse;
 import br.com.wsystechnologies.medical.application.mapper.AppointmentMapper;
 import br.com.wsystechnologies.medical.application.services.AppointmentService;
-import br.com.wsystechnologies.medical.domain.model.Appointment;
-import br.com.wsystechnologies.medical.domain.model.Patient;
-import br.com.wsystechnologies.medical.domain.model.Professional;
-import br.com.wsystechnologies.medical.domain.model.ServiceProvided;
-import br.com.wsystechnologies.medical.domain.repository.AppointmentRepository;
-import br.com.wsystechnologies.medical.domain.repository.DoctorRepository;
-import br.com.wsystechnologies.medical.domain.repository.PatientRepository;
-import br.com.wsystechnologies.medical.domain.repository.ServiceProvidedRepository;
+import br.com.wsystechnologies.medical.domain.enums.AppointmentStatus;
+import br.com.wsystechnologies.medical.domain.model.*;
+import br.com.wsystechnologies.medical.domain.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +23,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository repository;
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
+    private final ClinicRepository clinicRepository;
     private final ServiceProvidedRepository serviceRepository;
     private final AppointmentMapper mapper;
 
@@ -37,6 +33,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         Patient patient = patientRepository.findById(request.getPatientId())
                 .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
 
+        Clinic clinic = clinicRepository.findById(request.getClinicId())
+                .orElseThrow(() -> new EntityNotFoundException("Clinic not found"));
+
         Professional doctor = doctorRepository.findById(request.getProfessionalId())
                 .orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
 
@@ -44,8 +43,10 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .orElseThrow(() -> new EntityNotFoundException("Service not found"));
 
         Appointment entity = mapper.toEntity(request);
+        entity.setClinic(clinic);
         entity.setPatient(patient);
         entity.setProfessional(doctor);
+        entity.setStatus(AppointmentStatus.SCHEDULED);
         entity.setServiceProvided(serviceProvided);
 
         return mapper.toResponse(repository.save(entity));
