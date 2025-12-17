@@ -8,8 +8,8 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://postgres:5432/medical-db
-    username: postgres
+    url: jdbc:postgresql://postgres:5432/medicaldb
+    username: medicaluser
     password: ${DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
