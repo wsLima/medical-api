@@ -34,7 +34,7 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_FLYWAY_ENABLED: "true"
     volumes:
-      - ./ssl/api-keystore.p12:/app/api-keystore.p12
+      - /etc/medical/ssl/api-keystore.p12:/app/ssl/api-keystore.p12:ro
     ports:
       - "8443:8443"
     env_file:
