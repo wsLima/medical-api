@@ -36,7 +36,7 @@ services:
     volumes:
       - ./ssl/api-keystore.p12:/app/api-keystore.p12
     ports:
-      - "8080:8080"
+      - "8443:8443"
 
 volumes:
   postgres_data:
