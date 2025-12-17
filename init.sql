@@ -1,1 +1,1 @@
-CREATE SCHEMA IF NOT EXIST medical-db-dev;
+CREATE SCHEMA IF NOT EXIST medicaldb;
