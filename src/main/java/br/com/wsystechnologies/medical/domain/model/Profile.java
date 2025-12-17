@@ -21,7 +21,6 @@ public class Profile extends BaseEntity {
     private Account account;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_role")
     private Role role;
 
     @Builder.Default
