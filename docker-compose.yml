@@ -37,6 +37,8 @@ services:
       - ./ssl/api-keystore.p12:/app/api-keystore.p12
     ports:
       - "8443:8443"
+    env_file:
+      - .env
 
 volumes:
   postgres_data:
