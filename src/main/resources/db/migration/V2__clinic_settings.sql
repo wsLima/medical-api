@@ -12,4 +12,3 @@ create table clinic_settings
 );
 
 create index clinic_settings_clinic_id_idx on clinic_settings (clinic_id);
-ó
