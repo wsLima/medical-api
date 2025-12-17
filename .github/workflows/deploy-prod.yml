@@ -28,11 +28,18 @@ jobs:
   deploy:
     needs: build
     runs-on: self-hosted
-
     steps:
-      - name: Atualizar containers com docker-compose
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login no Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Deploy
         run: |
-          cd /var/www/prod
-          docker compose -f docker-compose.yml pull
-          docker compose -f docker-compose.yml up -d
+          docker compose pull
+          docker compose up -d
           docker system prune -f
