@@ -3,12 +3,12 @@ version: '3.8'
 services:
   postgres:
     image: postgres:15
-    container_name: postgres_medical
+    container_name: medical_db_prod
     restart: always
     environment:
-      POSTGRES_DB: medical-db-dev
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
+      POSTGRES_DB: medicaldb
+      POSTGRES_USER: medicaluser
+      POSTGRES_PASSWORD: ${DATASOURCE_PASSWORD}
     ports:
       - "5431:5432"   # host:container
     volumes:
@@ -17,46 +17,26 @@ services:
     networks:
       - app-network
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin_medical
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80"
-    depends_on:
-      - postgres
-    networks:
-      - app-network
-
   app:
-    build: .
-    container_name: spring_app_medical
+    image: wskanja/medical-api:prod
+    container_name: medical_api_prod
+    restart: always
     depends_on:
       - postgres
     networks:
       - app-network
     environment:
-      SPRING_PROFILES_ACTIVE: dev
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/medical-db-dev
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/medicaldb
+      SPRING_DATASOURCE_USERNAME: medicaluser
+      SPRING_DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
+      KEYSTORE_PASSWORD: ${KEYSTORE_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_FLYWAY_ENABLED: "true"
-      KEYSTORE_PASSWORD: admin@123
     volumes:
       - ./ssl/api-keystore.p12:/app/api-keystore.p12
     ports:
-      - "8443:8443"
-    command: >
-      java -jar app.jar
-      --server.port=8443
-      --server.ssl.key-store=/app/api-keystore.p12
-      --server.ssl.key-store-password=${KEYSTORE_PASSWORD}
-      --server.ssl.key-store-type=PKCS12
-      --server.ssl.key-alias=api
+      - "8080:8080"
 
 volumes:
   postgres_data:

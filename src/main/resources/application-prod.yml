@@ -1,0 +1,54 @@
+server:
+  port: ${SERVER_PORT}
+  ssl:
+    enabled: true
+    key-store: classpath:api-keystore.p12
+    key-store-password: ${KEYSTORE_PASSWORD}
+    key-store-type: PKCS12
+
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/medical-db
+    username: postgres
+    password: ${DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+        show_sql: false
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    org.hibernate.SQL: OFF
+    org.hibernate.type.descriptor.sql.BasicBinder: OFF
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+jwt:
+  secret: ${JWT_SECRET}
+
+  access:
+    expiration: ${JWT_EXPIRATION}
+
+  refresh:
+    expiration: ${JWT_REFRESH}

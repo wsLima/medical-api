@@ -16,6 +16,8 @@ import br.com.wsystechnologies.medical.domain.repository.PatientRepository;
 import br.com.wsystechnologies.medical.domain.repository.ProfileRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -122,4 +124,11 @@ public class PatientServiceImpl implements PatientService {
     public List<PatientResponse> findAll() {
         return repository.findAll().stream().map(mapper::toResponse).toList();
     }
+
+    @Override
+    public Page<PatientResponse> search(String fullName, String documentId, String email, Pageable pageable) {
+        return repository.search(fullName, documentId, email, pageable)
+                .map(mapper::toResponse);
+    }
+
 }

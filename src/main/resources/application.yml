@@ -16,12 +16,3 @@ springdoc:
     path: /swagger-ui.html
     operationsSorter: method
     tagsSorter: alpha
-
-server:
-  port: 8080
-
-# profile padrão (caso nenhum seja informado)
----
-spring:
-  profiles:
-    active: dev

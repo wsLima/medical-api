@@ -15,7 +15,7 @@
 
     <groupId>br.com.wsys-technologies</groupId>
     <artifactId>medical-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>medical-api</name>
     <description>Sistema médico</description>

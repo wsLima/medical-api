@@ -19,6 +19,11 @@ target/
 *.iml
 *.ipr
 
+### Docker ###
+docker-compose.override.yml
+.env
+*.pid
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -31,3 +36,17 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Logs ###
+logs/
+*.log
+*.log.*
+
+### Java ###
+*.class
+
+### Build artifacts ###
+*.jar
+*.war
+*.zip
+*.tar.gz

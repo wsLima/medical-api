@@ -4,6 +4,8 @@ import br.com.wsystechnologies.medical.application.dto.patient.PatientRequest;
 import br.com.wsystechnologies.medical.application.dto.patient.PatientResponse;
 import br.com.wsystechnologies.medical.application.services.PatientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +50,16 @@ public class PatientController {
             return ResponseEntity.ok(service.findAllByName(name));
         }
         return ResponseEntity.ok(service.findAll());
+    }
+
+    @GetMapping("/search")
+    public Page<PatientResponse> search(
+            @RequestParam(required = false) String fullName,
+            @RequestParam(required = false) String documentId,
+            @RequestParam(required = false) String email,
+            Pageable pageable
+    ) {
+        return service.search(fullName, documentId, email, pageable);
     }
 }
 
