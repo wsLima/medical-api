@@ -3,11 +3,8 @@ package br.com.wsystechnologies.medical.domain.enums;
 public enum Role {
     SYSTEM_ADMIN,   // administrador do sistema
     CLINIC_ADMIN,   // administrador da clínica
-    MEDICO,         // médico
-    ENFERMEIRA,     // enfermeira
-    ATENDENTE,      // atendente (auxiliar)
-    RECEPCIONISTA,  // recepcionista
+    PATIENT,        // paciente
+    PROFESSIONAL,   // médico
     FINANCE,        // financeiro
-    ASSISTANT,      // assistente
-    PACIENTE        // paciente
+    RECEPTIONIST    // recepsionista
 }

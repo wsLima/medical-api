@@ -8,6 +8,41 @@
 create extension if not exists "uuid-ossp";
 create extension if not exists "pgcrypto";
 
+-- ========================================================
+-- Criando os tipos ENUM necessários
+-- ========================================================
+
+-- Tipo para perfis de usuário
+CREATE TYPE user_role AS ENUM (
+    'SYSTEM_ADMIN',
+    'CLINIC_ADMIN',
+    'PATIENT',
+    'PROFESSIONAL',
+    'FINANCE',
+    'RECEPTIONIST'
+    );
+
+-- Tipo para especialidade do profissional
+CREATE TYPE specialty AS ENUM (
+    'GENERAL_PRACTICE',
+    'CARDIOLOGY', 'DERMATOLOGY',
+    'PEDIATRICS'
+    );
+
+-- Tipo para status de agendamento
+CREATE TYPE appointment_status AS ENUM (
+    'SCHEDULED',
+    'CANCELLED',
+    'COMPLETED'
+    );
+
+-- Tipo para tipo de documento
+CREATE TYPE document_type AS ENUM (
+    'IDENTITY',
+    'MEDICAL_REPORT',
+    'PRESCRIPTION'
+    );
+
 -- -------------------------------------------------------
 -- ADDRESSES
 -- -------------------------------------------------------
@@ -100,7 +135,7 @@ create table profiles
     tenant_id  uuid not null,
     clinic_id  uuid not null references clinics (id) on delete cascade,
     account_id uuid not null references accounts (id) on delete cascade,
-    role       user_role not null default 'PACIENTE',
+    role       user_role not null default 'PATIENT',
     is_active  boolean not null default true,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
