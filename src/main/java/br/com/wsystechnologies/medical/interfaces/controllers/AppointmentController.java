@@ -52,5 +52,15 @@ public class AppointmentController {
         }
         return ResponseEntity.ok(service.findAll());
     }
+
+    @PostMapping("/{id}/checkin")
+    public ResponseEntity<AppointmentResponse> checkIn(@PathVariable UUID id, @RequestParam UUID userId) {
+        return ResponseEntity.ok(service.checkIn(id, userId));
+    }
+
+    @PostMapping("/{id}/checkout")
+    public ResponseEntity<AppointmentResponse> checkOut(@PathVariable UUID id, @RequestParam UUID userId) {
+        return ResponseEntity.ok(service.checkOut(id, userId));
+    }
 }
 

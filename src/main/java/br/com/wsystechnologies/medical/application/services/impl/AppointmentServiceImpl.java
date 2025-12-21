@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +25,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
     private final ClinicRepository clinicRepository;
+    private final ProfileRepository profileRepository;
     private final ServiceProvidedRepository serviceRepository;
     private final AppointmentMapper mapper;
 
@@ -115,4 +117,35 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<AppointmentResponse> findAll() {
         return repository.findAll().stream().map(mapper::toResponse).toList();
     }
+
+    @Override
+    public AppointmentResponse checkIn(UUID appointmentId, UUID userId) {
+        Appointment appt = repository.findById(appointmentId)
+                .orElseThrow(() -> new EntityNotFoundException("Appointment not found"));
+
+        Profile actor = profileRepository.findByAccountId(userId)
+                .orElseThrow(() ->  new EntityNotFoundException("Profile not found"));
+        appt.setCheckinAt(Instant.now());
+        appt.setCheckedInBy(actor);
+        appt.setStatus(AppointmentStatus.CONFIRMED);
+
+        Appointment saved = repository.save(appt);
+        return mapper.toResponse(saved);
+    }
+
+    @Override
+    public AppointmentResponse checkOut(UUID appointmentId, UUID userId) {
+        Appointment appt = repository.findById(appointmentId)
+                .orElseThrow(() -> new EntityNotFoundException("Appointment not found"));
+
+        Profile actor = profileRepository.findByAccountId(userId)
+                .orElseThrow(() ->  new EntityNotFoundException("Profile not found"));
+                appt.setCheckoutAt(Instant.now());
+        appt.setCheckedOutBy(actor);
+        appt.setStatus(AppointmentStatus.COMPLETED);
+
+        Appointment saved = repository.save(appt);
+        return mapper.toResponse(saved);
+    }
+
 }

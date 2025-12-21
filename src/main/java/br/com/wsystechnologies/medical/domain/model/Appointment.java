@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.type.PostgreSQLEnumJdbcType;
 
 import java.time.Instant;
 
@@ -36,7 +38,6 @@ public class Appointment extends BaseEntity {
     private Instant endsAt;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", columnDefinition = "appointment_status")
     private AppointmentStatus status;
 
     private String notes;
@@ -48,5 +49,16 @@ public class Appointment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "service_provided_id")
     private ServiceProvided serviceProvided;
+
+    private Instant checkinAt;
+    private Instant checkoutAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "checked_in_by")
+    private Profile checkedInBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "checked_out_by")
+    private Profile checkedOutBy;
 }
 

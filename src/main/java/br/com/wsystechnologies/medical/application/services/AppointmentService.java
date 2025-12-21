@@ -26,4 +26,8 @@ public interface AppointmentService {
     List<AppointmentResponse> findAllByClinic(UUID clinicId);
 
     List<AppointmentResponse> findAll();
+
+    AppointmentResponse checkIn(UUID appointmentId, UUID userId);
+
+    AppointmentResponse checkOut(UUID appointmentId, UUID userId);
 }
