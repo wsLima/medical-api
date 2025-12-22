@@ -31,7 +31,7 @@ public class AuditLog extends BaseEntity {
     private UUID entityId;
     private String action;
 
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "TEXT")
     private String details;
 }
 

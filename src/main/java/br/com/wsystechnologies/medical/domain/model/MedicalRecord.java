@@ -31,7 +31,7 @@ public class MedicalRecord extends BaseEntity {
 
     private String mainIssue;
 
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "TEXT")
     private String anamnesis;
 
     private String notes;

@@ -35,6 +35,6 @@ public class Evolution extends BaseEntity {
 
     private String notes;
 
-    @Column(columnDefinition = "jsonb")
+    @Column(columnDefinition = "TEXT")
     private String structuredData;
 }
