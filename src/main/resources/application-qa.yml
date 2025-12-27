@@ -32,3 +32,8 @@ jwt:
 
   refresh:
     expiration: ${JWT_REFRESH:1209600000} # 14 dias
+
+aws:
+  region: ${AWS_REGION}
+  s3:
+    bucket: ${AWS_S3_BUCKET}
