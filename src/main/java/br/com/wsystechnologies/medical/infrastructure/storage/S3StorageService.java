@@ -23,13 +23,16 @@ public class S3StorageService {
     @Value("${aws.s3.bucket}")
     private String bucket;
 
+    @Value("${aws.s3.medical-prefix}")
+    private String prefix;
+
     private final S3Client s3Client;
     private final S3Presigner s3Presigner;
 
 
     public String upload(MultipartFile file) {
         try {
-            String key = UUID.randomUUID() + "-" + file.getOriginalFilename();
+            String key = prefix + "/" + UUID.randomUUID() + "-" + file.getOriginalFilename();
 
             PutObjectRequest request = PutObjectRequest.builder()
                     .bucket(bucket)

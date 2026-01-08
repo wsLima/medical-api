@@ -1,4 +1,4 @@
-package br.com.wsystechnologies.medical.application.dto.DoctorAvailableDay;
+package br.com.wsystechnologies.medical.application.dto.doctorAvailableDay;
 
 import lombok.Getter;
 import lombok.Setter;

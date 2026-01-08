@@ -1,7 +1,7 @@
 package br.com.wsystechnologies.medical.interfaces.controllers;
 
-import br.com.wsystechnologies.medical.application.dto.DoctorAvailableDay.DoctorAvailableDayRequest;
-import br.com.wsystechnologies.medical.application.dto.DoctorAvailableDay.DoctorAvailableDayResponse;
+import br.com.wsystechnologies.medical.application.dto.doctorAvailableDay.DoctorAvailableDayRequest;
+import br.com.wsystechnologies.medical.application.dto.doctorAvailableDay.DoctorAvailableDayResponse;
 import br.com.wsystechnologies.medical.application.services.DoctorAvailableDayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

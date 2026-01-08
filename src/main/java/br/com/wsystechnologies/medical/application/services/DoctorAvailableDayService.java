@@ -1,8 +1,7 @@
 package br.com.wsystechnologies.medical.application.services;
 
-import br.com.wsystechnologies.medical.application.dto.DoctorAvailableDay.DoctorAvailableDayRequest;
-import br.com.wsystechnologies.medical.application.dto.DoctorAvailableDay.DoctorAvailableDayResponse;
-import org.jspecify.annotations.Nullable;
+import br.com.wsystechnologies.medical.application.dto.doctorAvailableDay.DoctorAvailableDayRequest;
+import br.com.wsystechnologies.medical.application.dto.doctorAvailableDay.DoctorAvailableDayResponse;
 
 import java.util.List;
 import java.util.UUID;
