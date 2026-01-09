@@ -9,5 +9,6 @@ public record MedicalRecordDocumentResponse(
         String mimeType,
         long sizeBytes,
         String description,
-        Instant createdAt
+        Instant createdAt,
+        String storagePath
 ) {}
