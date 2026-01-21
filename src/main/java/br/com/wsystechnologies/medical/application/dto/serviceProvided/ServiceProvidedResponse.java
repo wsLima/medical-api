@@ -1,4 +1,4 @@
-package br.com.wsystechnologies.medical.application.dto.ServiceProvided;
+package br.com.wsystechnologies.medical.application.dto.serviceProvided;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,8 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class ServiceProvidedRequest {
+public class ServiceProvidedResponse {
+    private UUID id;
     private String name;
     private String description;
     private Double price;

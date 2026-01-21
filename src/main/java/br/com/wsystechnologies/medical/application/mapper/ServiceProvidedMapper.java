@@ -1,7 +1,7 @@
 package br.com.wsystechnologies.medical.application.mapper;
 
-import br.com.wsystechnologies.medical.application.dto.ServiceProvided.ServiceProvidedRequest;
-import br.com.wsystechnologies.medical.application.dto.ServiceProvided.ServiceProvidedResponse;
+import br.com.wsystechnologies.medical.application.dto.serviceProvided.ServiceProvidedRequest;
+import br.com.wsystechnologies.medical.application.dto.serviceProvided.ServiceProvidedResponse;
 import br.com.wsystechnologies.medical.domain.model.Clinic;
 import br.com.wsystechnologies.medical.domain.model.ServiceProvided;
 import org.mapstruct.*;

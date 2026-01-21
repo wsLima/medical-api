@@ -1,8 +1,8 @@
 package br.com.wsystechnologies.medical.application.services;
 
 
-import br.com.wsystechnologies.medical.application.dto.ServiceProvided.ServiceProvidedRequest;
-import br.com.wsystechnologies.medical.application.dto.ServiceProvided.ServiceProvidedResponse;
+import br.com.wsystechnologies.medical.application.dto.serviceProvided.ServiceProvidedRequest;
+import br.com.wsystechnologies.medical.application.dto.serviceProvided.ServiceProvidedResponse;
 
 import java.util.List;
 import java.util.UUID;

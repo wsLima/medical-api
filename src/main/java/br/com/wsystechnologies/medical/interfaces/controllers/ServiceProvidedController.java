@@ -1,7 +1,7 @@
 package br.com.wsystechnologies.medical.interfaces.controllers;
 
-import br.com.wsystechnologies.medical.application.dto.ServiceProvided.ServiceProvidedRequest;
-import br.com.wsystechnologies.medical.application.dto.ServiceProvided.ServiceProvidedResponse;
+import br.com.wsystechnologies.medical.application.dto.serviceProvided.ServiceProvidedRequest;
+import br.com.wsystechnologies.medical.application.dto.serviceProvided.ServiceProvidedResponse;
 import br.com.wsystechnologies.medical.application.services.ServiceProvidedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
